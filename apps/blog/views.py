@@ -18,8 +18,8 @@ class EntryView(View):
             (r'^list/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/$', 'list'),
             (r'^list/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/page/(?P<page>\d+)/$', 'list'),
 
-            (r'^entry/', 'entry'),
-            (r'^entry/(?P<slug>\w+)/', 'entry'),
+            (r'^entry/$', 'entry'),
+            (r'^entry/(?P<slug>\w+)/$', 'entry'),
         )
 
     def get(self):
@@ -74,7 +74,11 @@ view = EntryView()
 
 r1 = FakeRequest('GET', {'path_info': 'list/page/3/'})
 r2 = FakeRequest('GET', {'path_info': 'list/'})
-cd, t = view.dispatch(r1, None, None, None)
-print(cd + ' for: ' + r1.meta['path_info'])
-cd, t = view.dispatch(r2, None, None, None)
-print(cd + ' for: ' + r2.meta['path_info'])
+r = view.dispatch(r1, None, None, None)
+print(r + ' for: ' + r1.meta['path_info'])
+r = view.dispatch(r2, None, None, None)
+print(r + ' for: ' + r2.meta['path_info'])
+
+r3 = FakeRequest('PUT', {'path_info': 'entry/entry1/'})
+r = view.dispatch(r3, None, None, None)
+print(r + ' for: ' + r3.meta['path_info'])
