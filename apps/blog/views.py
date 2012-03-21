@@ -6,17 +6,17 @@ class EntryView(View):
         return (
             (r'^$', ''),
 
-            (r'^list/', 'list'),
-            (r'^list/page/(?P<page>\d+)/', 'list'),
+            (r'^list/$', 'list'),
+            (r'^list/page/(?P<page>\d+)/$', 'list'),
 
-            (r'^list/(?P<year>\d+)/', 'list'),
-            (r'^list/(?P<year>\d+)/page/(?P<page>\d+)/', 'list'),
+            (r'^list/(?P<year>\d+)/$', 'list'),
+            (r'^list/(?P<year>\d+)/page/(?P<page>\d+)/$', 'list'),
 
-            (r'^list/(?P<year>\d+)/(?P<month>\d+)/', 'list'),
-            (r'^list/(?P<year>\d+)/(?P<month>\d+)/page/(?P<page>\d+)/', 'list'),
+            (r'^list/(?P<year>\d+)/(?P<month>\d+)/$', 'list'),
+            (r'^list/(?P<year>\d+)/(?P<month>\d+)/page/(?P<page>\d+)/$', 'list'),
 
-            (r'^list/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/', 'list'),
-            (r'^list/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/page/(?P<page>\d+)/', 'list'),
+            (r'^list/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/$', 'list'),
+            (r'^list/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/page/(?P<page>\d+)/$', 'list'),
 
             (r'^entry/', 'entry'),
             (r'^entry/(?P<slug>\w+)/', 'entry'),
