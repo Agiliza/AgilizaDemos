@@ -24,6 +24,8 @@ from agiliza.core.utils.patterns import Singleton
 
 from bson.objectid import ObjectId
 
+from looleo.utils import filter_dict
+
 class NiceDict(dict):
 	def __getattr__(self, key):
 		if key not in self.keys():
@@ -83,20 +85,16 @@ class UserManager(PymongoManager):
 		user = self.findOneUser({"_id":review.user["_id"]})
 
 		rev = {"text":review.text,
-				"book":{
-					"_id":review.book["_id"],
-					"title":review.book["title"],
-					"author":review.book["author"],
-				},
+				"book": filter_dict(review.book, without=["reviews"]),
 				"stars":review.stars,
 				"_id":review._id,}
 
-		if user.has_key("review"):
-			user["review"].append(rev)
+		if user.has_key("reviews"):
+			user["reviews"].append(rev)
 		else:
-			user.update({"review":[rev]})
+			user.update({"reviews":[rev]})
 
-		self.collection.update(
+		return self.collection.update(
 			{"_id":user["_id"]},
 			user
 		)
@@ -140,20 +138,16 @@ class BookManager(PymongoManager):
 		book = self.findOneBook({"_id":review.book["_id"]})
 
 		rev = {"text":review.text,
-				"user":{
-					"_id":review.user["_id"],
-					"username":review.user["username"],
-					"email":review.user["email"],
-				},
+				"user":filter_dict(review.user, without=["reviews", "password"]),
 				"stars":review.stars,
 				"_id":review._id,}
 
-		if book.has_key("review"):
-			book["review"].append(rev)
+		if book.has_key("reviews"):
+			book["reviews"].append(rev)
 		else:
-			book.update({"review":[rev]})
+			book.update({"reviews":[rev]})
 
-		self.collection.update(
+		return self.collection.update(
 			{"_id":book["_id"]},
 			book
 		)

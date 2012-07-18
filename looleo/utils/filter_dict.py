@@ -15,13 +15,12 @@ You should have received a copy of the GNU General Public License
 along with Agiliza.  If not, see <http://www.gnu.org/licenses/>.
 
 
-Copyright (c) 2012 Álvaro Hurtado <alvarohurtado84@gmail.com>
+Copyright (c) 2012 Alvaro Hurtado <alvarohurtado84@gmail.com>
 """
-from looleo.controllers.book import Book
-from looleo.controllers.book import BookCreator
 
-from looleo.controllers.user import User
-from looleo.controllers.user import UserCreator
-from looleo.controllers.user import UserLogin
-
-from looleo.controllers.review import ReviewCreator
+def filter_dict(dictionary, without):
+	return {
+		key:dictionary[key] 
+		for key in dictionary.keys()
+		if key not in without
+		}

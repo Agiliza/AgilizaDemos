@@ -26,57 +26,30 @@ from looleo.managers import BookManager, UserManager
 from looleo.managers import User, Book, Review
 from looleo.managers import get_book_manager, get_user_manager
 
-            
-class Book(Controller):
 
-	def get(self, request, params):
-		#print("book: ", dir(self))
-		if not "count" in self.session._data:
-			self.session["count"] = 1
-		else:
-			self.session["count"] = self.session["count"] + 1
-
-			
-		#
-		#print("Cookies: ", request.cookies)
-		#if request.cookies.get("sid2"):
-		#	self.cookies["sid2"] = ""
-		#	self.cookies["sid2"]["expires"]="10-jul-2010 20:54:21 GMT"
-		#
-		#if request.cookies.get("sid"):
-		#	self.cookies["dis"]="pinocho"
-		#
-		
-		bm = get_book_manager() 
-		
-		slug = params["book_slug"]
-		return {
-			"book" : bm.findOneBook({"slug":slug}),
-			"count" : self.session["count"],
-			}
-
-class BookCreator(Controller):
+class ReviewCreator(Controller):
 
 	def post(self, request, params):
-		bm = get_book_manager()
+		um = get_user_manager()
 		
-		if 'title' in request.data and 'author' in request.data:
+		if 'username' in request.data and 'password' in request.data and 'email' in request.data:
 			
-			book = bm.createBook({
-				"title":request.data["title"].value,
-				"author":request.data["author"].value,
-				"slug":slugify(request.data["title"].value),
+			user = um.createUser({
+				"username":request.data["username"].value,
+				"password":request.data["password"].value,
+				"email":request.data["email"].value,
 			})
-			id_book = bm.insertBook(book)
 			
-			if id_book is not None:
+			id_user = um.insertUser(user)
+			
+			if id_user is not None:
 				return {
-					"book":book,
+					"user":user,
 					"msg":"Created successfully.",
 				}
 
 		return {
-			"book":None,
+			"user":None,
 			"msg":"Something was wrong.",
-		}    
-    
+		}
+		

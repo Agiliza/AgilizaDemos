@@ -1,0 +1,8 @@
+HTTP/1.0 200 OK
+Date: Wed, 18 Jul 2012 18:26:40 GMT
+Server: WSGIServer/0.2 Python/3.2.2
+Content-Type: text/html; charset=utf-8
+Set-Cookie: sid=pepitogrillo
+Set-Cookie: dis=pinocho
+Content-Length: 165
+

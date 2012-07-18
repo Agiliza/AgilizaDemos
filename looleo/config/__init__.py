@@ -19,7 +19,13 @@ Copyright (c) 2012 Álvaro Hurtado <alvarohurtado84@gmail.com>
 """
 
 installed_apps = []
-middleware_level0 = []
+middleware_level0 = ['agiliza.addons.sessions.middleware.SessionMiddleware']
+middleware_level1 = ['agiliza.addons.sessions.middleware.SessionMiddleware']
 templates = {
     'directory': './templates/'
+}
+settings = {
+	'sessions':{
+		'directory': './session/'
+	}
 }
