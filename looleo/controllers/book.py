@@ -20,27 +20,44 @@ Copyright (c) 2012 Álvaro Hurtado <alvarohurtado84@gmail.com>
 
 from agiliza.controllers import Controller
 
+from agiliza.utils import slugify
+
 from looleo.managers import BookManager, UserManager
 from looleo.managers import User, Book, Review
+from looleo.managers import get_book_manager, get_user_manager
 
+            
+class Book(Controller):
 
-class BookReviews(Controller):
-    
-    def get(self, request, params):
-        bm = BookManager(
-            database_name="looleo_prueba",
-            collection_name="prueba"
-            )
-        slug = params["book_slug"]
-        data = {
-            "book" : bm.findOneBook({"slug":slug}),
-            }
-        
-        return data
-        
-    def post(self, request, params):
-        return {}
-        
-        
-    
+	def get(self, request, params):
+		bm = get_book_manager() 
+		
+		slug = params["book_slug"]
+		data = {
+			"book" : bm.findOneBook({"slug":slug}),
+			}
+		
+		return data
+		
+	def post(self, request, params):
+		bm = get_book_manager()
+		if request.meta.has_key('title') and request.meta.has_key('author'):
+			
+			book = bm.createBook({
+				"title":request.meta["title"],
+				"author":request.meta["author"],
+				"slug":slugify(request.meta["title"]),
+			})
+			id_book = bm.insertBook(book)
+			
+			if id_book is not None:
+				return {
+					"book":book,
+					"msg":"Created successfully.",
+				}
+
+		return {
+			"book":None,
+			"msg":"Something was wrong.",
+		}    
     
