@@ -20,7 +20,7 @@ Copyright (c) 2012 Alvaro Hurtado <alvarohurtado84@gmail.com>
 
 from pymongo import Connection
 
-from agiliza.core.utils.pattern import Singleton
+from agiliza.core.utils.patterns import Singleton
 
 from bson.objectid import ObjectId
 
@@ -36,7 +36,7 @@ class NiceDict(dict):
         self[key] = value
 
 
-class PymongoManager(object, Singleton):
+class PymongoManager(Singleton):
     def __init__(self, database_name, collection_name, host=None, port=None):
         if not host or not port:
             self.connection = Connection()
@@ -44,12 +44,12 @@ class PymongoManager(object, Singleton):
             self.connection = Connection(host=host, port=port)
         self.db = getattr(self.connection, database_name)
         self.collection = getattr(self.db, collection_name)
-            
+
 
 class UserManager(PymongoManager):
     def __init__(self, *args, **kwargs):
         super(UserManager, self).__init__(*args, **kwargs)
-    
+
     def insertUser(self, user):
         if user.is_valid():
             return self.collection.insert(user)
@@ -62,26 +62,26 @@ class UserManager(PymongoManager):
             return user
         else:
             return None
-            
+
     def findOneUser(self, document=None):
         query = {}
         if document is not None:
             query.update(document)
         query.update({"type":"user"})
-        
+
         return self.collection.find_one(query)
-        
+
     def findUsers(self, document=None):
         query = {}
         if document is not None:
             query.update(document)
         query.update({"type":"user"})
-        
+
         return self.collection.find(query)
-        
+
     def addReview(self, review):
         user = self.findOneUser({"_id":review.user["_id"]})
-        
+
         rev = {"text":review.text,
                 "book":{
                     "_id":review.book["_id"],
@@ -90,23 +90,23 @@ class UserManager(PymongoManager):
                 },
                 "stars":review.stars,
                 "_id":review._id,}
-        
+
         if user.has_key("review"):
             user["review"].append(rev)
         else:
             user.update({"review":[rev]})
-    
+
         self.collection.update(
             {"_id":user["_id"]},
             user
         )
-        
+
 
 
 class BookManager(PymongoManager):
     def __init__(self, *args, **kwargs):
         super(BookManager, self).__init__(*args, **kwargs)
-    
+
     def insertBook(self, book):
         if book.is_valid():
             return self.collection.insert(book)
@@ -119,26 +119,26 @@ class BookManager(PymongoManager):
             return book
         else:
             return None
-            
+
     def findOneBook(self, document=None):
         query = {}
         if document is not None:
             query.update(document)
         query.update({"type":"book"})
-        
+
         return self.collection.find_one(query)
-        
+
     def findBooks(self, document):
         query = {}
         if document is not None:
             query.update(document)
         query.update({"type":"book"})
-        
+
         return self.collection.find(query)
-                
+
     def addReview(self, review):
         book = self.findOneBook({"_id":review.book["_id"]})
-        
+
         rev = {"text":review.text,
                 "user":{
                     "_id":review.user["_id"],
@@ -147,12 +147,12 @@ class BookManager(PymongoManager):
                 },
                 "stars":review.stars,
                 "_id":review._id,}
-        
+
         if book.has_key("review"):
             book["review"].append(rev)
         else:
             book.update({"review":[rev]})
-    
+
         self.collection.update(
             {"_id":book["_id"]},
             book
@@ -162,8 +162,8 @@ class User(NiceDict):
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         self.update({"type":"user"})
-        
-    
+
+
     def is_valid(self):
         required_fields = ("username", "password", "email")
         for rf in required_fields:
@@ -172,12 +172,12 @@ class User(NiceDict):
             except AttributeError:
                 return False
         return True
-        
+
 class Book(NiceDict):
     def __init__(self, *args, **kwargs):
         super(Book, self).__init__(*args, **kwargs)
         self.update({"type":"book"})
-    
+
     def is_valid(self):
         required_fields = ("title", "author", "slug")
         for rf in required_fields:
@@ -186,12 +186,12 @@ class Book(NiceDict):
             except AttributeError:
                 return False
         return True
-    
+
 class Review(NiceDict):
     def __init__(self, *args, **kwargs):
         super(Review, self).__init__(*args, **kwargs)
         self.update({"_id":ObjectId()})
-    
+
     def is_valid(self):
         required_fields = ("text", "book", "user", "stars")
         for rf in required_fields:
@@ -200,5 +200,5 @@ class Review(NiceDict):
             except AttributeError:
                 return False
         return True
-        
+
 
