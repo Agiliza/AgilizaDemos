@@ -1,5 +1,5 @@
 
-from agiliza import url, include
+from agiliza.config.urls import url, include
 
 
 url_patterns = (
