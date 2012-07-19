@@ -15,12 +15,13 @@ You should have received a copy of the GNU General Public License
 along with Agiliza.  If not, see <http://www.gnu.org/licenses/>.
 
 
-Copyright (c) 2012 Álvaro Hurtado <alvarohurtado84@gmail.com>
+Copyright (c) 2012 Alvaro Hurtado <alvarohurtado84@gmail.com>
 """
-from looleo.controllers.book import Book
-from looleo.controllers.book import BookCreator
 
-from looleo.controllers.user import User
-from looleo.controllers.user import UserCreator
-from looleo.controllers.user import UserLogin
-from looleo.controllers.user import UserLogout
+def who_is_logged(session):
+	if "user_logged" in session:
+		return session["user_logged"]
+	else:
+		return None
+
+

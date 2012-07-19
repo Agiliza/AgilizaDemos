@@ -1,13 +1,28 @@
 {% extends "base.html" %}
 
+{% block title %}Gestión de Libros{% endblock %}
+
 {% block content %}
-
-{% if book %}
-	<h1>{{ count }}</h1>
-    <h2>{{ book.title }}</h2>
-    <h3>{{ book.author }}</h3>
-{% else %}
-    <p>No hay libro</p>
-{% endif %}
-
+	{% if msg %}
+	<div class="msg">{{ msg }}</div>
+	{% endif %}
+	
+	{% if book %}
+		<h2>{{ book.title }}</h2>
+		<h3>{{ book.author }}</h3>		
+	{% else %}
+		<h3>Cree un nuevo libro:</h3>
+		<form action="." method="post" enctype="multipart/form-data">
+			<div class="form_field">
+				Título:<input type="text" name="title"/>
+			</div>
+			<div class="form_field">
+				Autor:<input type="text" name="author"/>
+			</div>
+			<div class="form_field">
+				Imagen:<input type="file" name="cover"/>
+			</div>
+			<input type="submit" value="Enviar" />
+		</form>
+	{% endif %}
 {% endblock %}

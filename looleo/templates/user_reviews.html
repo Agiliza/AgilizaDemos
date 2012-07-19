@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de {{ user.username }}{% endblock %}
+
+{% block content %}
+	{% if msg %}
+	<div class="msg">{{ msg }}</div>
+	{% endif %}
+	
+	{% if user %}
+		<h2>{{ user.username }}</h2>
+		<div class="reviews">
+			{% for review in user.reviews %}
+			<div class="book">{{ review.book.title }} - {{ review.book.author }}</div>
+			<div class="review">{{ review.stars }} -- {{ review.text }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endblock %}

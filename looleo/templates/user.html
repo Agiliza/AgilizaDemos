@@ -1,12 +1,28 @@
 {% extends "base.html" %}
 
+{% block title %}Gestión de Usuarios{% endblock %}
+
 {% block content %}
-
-{% if book %}
-    <h2>{{ book.title }}</h2>
-    <h3>{{ book.author }}</h3>
-{% else %}
-    <p>No hay libro</p>
-{% endif %}
-
+	{% if msg %}
+	<div class="msg">{{ msg }}</div>
+	{% endif %}
+	
+	{% if user %}
+		<h2>{{ user.username }}</h2>
+		<h3>{{ user.email }}</h3>		
+	{% else %}
+		<h3>Cree un nuevo usuario:</h3>
+		<form action="." method="post">
+			<div class="form_field">
+				Nombre de usuario:<input type="text" name="username"/>
+			</div>
+			<div class="form_field">
+				Email:<input type="text" name="email"/>
+			</div>
+			<div class="form_field">
+				Password:<input type="password" name="password"/>
+			</div>
+			<input type="submit" value="Enviar" />
+		</form>
+	{% endif %}
 {% endblock %}
