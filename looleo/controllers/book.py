@@ -32,33 +32,7 @@ from looleo.utils import who_is_logged
             
 class Book(Controller):
 
-
 	def get(self, request, params):
-		#print("LOGGED USER IS ", who_is_logged(self.session))
-		#if not "count" in self.session:
-			#self.session["count"] = 1
-		#else:
-			#self.session["count"] = self.session["count"] + 1
-			
-		#print("SID: ", self.session["sid"])	
-		#print("IS")
-		#print("IS")
-		#print("IS")
-		#if "user_logged" in self.session:
-			#print("ONLINE: ", self.session["user_logged"])
-		#print("IS")
-		#print("IS")
-		#print("IS")
-
-		#
-		#print("Cookies: ", request.cookies)
-		#if request.cookies.get("sid2"):
-		#	self.cookies["sid2"] = ""
-		#	self.cookies["sid2"]["expires"]="10-jul-2010 20:54:21 GMT"
-		#
-		#if request.cookies.get("sid"):
-		#	self.cookies["dis"]="pinocho"
-		#
 		
 		bm = get_book_manager() 
 		
@@ -79,6 +53,54 @@ class Book(Controller):
 				}
 		else:
 			raise HttpResponseNotFound("El libro con identificador %s no existe." % slug)
+			
+	def post(self, request, params):
+		um = get_user_manager()
+		bm = get_book_manager()
+		
+		# Comprobamos que el usuario esté logueado
+		username = who_is_logged(self.session)
+		if username is None: 
+			return HttpResponseFound(redirect_to="/user/login/")
+		else:
+			user = um.findOneUser({"username":username})
+			
+		#Comprobamos que la página del libro sea correctas
+		slug = params["book_slug"]
+		book = bm.findOneBook({"slug":slug})
+		if book is None:
+			raise HttpResponseNotFound("El libro con identificador %s no existe." % slug)
+			
+		
+		if ('text' in request.data and
+			not_empty(request.data["text"].value) and
+			'stars' in request.data and
+			not_empty(request.data["stars"].value)): 
+			
+			
+			review = Review({
+				"user" : user,
+				"book" : book,
+				"text" : request.data["text"].value,
+				"stars" : request.data["stars"].value,
+				})
+				
+			user = um.addReview(review)
+			book = bm.addReview(review)
+			
+			return {
+				"book": book,
+				"user_logged": True,
+				"msg": "Comentario guardado correctamente.",
+				}
+					
+		return {
+			"book": book,
+			"user_logged": True,
+			"review_form":review,
+			"msg":"Algunos campos del comentario no son válidos.",
+		}
+		
 
 class BookCreator(Controller):
 	def get(self, request, params):
@@ -99,6 +121,17 @@ class BookCreator(Controller):
 		if ('title' in request.data and 'author' in request.data and 
 			not_empty(request.data["title"].value) and
 			not_empty(request.data["author"].value)):			
+
+			#Si existe, guardamos imagen.
+			if "cover" in request.data:
+				print("DIR COVER: ", dir(request.data["cover"]))
+				print("DIR FILE: ", dir(request.data["cover"].file))
+				file = open(request.data["cover"].filename, "wb")
+				for line in request.data["cover"].file:
+					file.write(line)
+				
+				file.close()
+				print("Guardado con éxito! --------------")
 
 			book = bm.createBook({
 				"title":request.data["title"].value,
@@ -133,54 +166,3 @@ class BookCreator(Controller):
 				"msg":"Falta alguno de los campos.",
 			}
 			
-	def put(self, request, params):
-		um = get_user_manager()
-		bm = get_book_manager()
-		
-		# Comprobamos que el usuario esté logueado
-		username = who_is_logged(self.session)
-		if username is None: 
-			return HttpResponseFound(redirect_to="/user/login/")
-		else:
-			user = um.findOneUser({"username":username})
-			
-		#Comprobamos que la página del libro sea correctas
-		slug = params["book_slug"]
-		book = bm.findOneBook({"slug":slug})
-		if book is None:
-			raise HttpResponseNotFound("El libro con identificador %s no existe." % slug)
-			
-		
-		if ('text' in request.data and
-			not_empty(request._data["text"].value) and
-			'stars' in request.data and
-			not_empty(request._data["stars"].value)): 
-			
-			review = Review({
-				"user" : user,
-				"book" : book,
-				"text" : request.data["text"].value,
-				"stars" : request.data["stars"].value,
-				})
-				
-			user_result = um.addReview(review)
-			book_result = bm.addReview(review)
-			
-			if user_result and book_result:
-				return {
-					"book": book,
-					"msg": "Comentario guardado correctamente.",
-					}
-				
-			return {
-				"book":book,
-				"review_form":review,
-				"msg": "Algo fué mal, inténtelo de nuevo.",
-				}
-		
-		return {
-			"book": book,
-			"review_form":review,
-			"msg":"Algunos campos del comentario no son válidos.",
-		}
-		

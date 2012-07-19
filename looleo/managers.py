@@ -89,15 +89,17 @@ class UserManager(PymongoManager):
 				"stars":review.stars,
 				"_id":review._id,}
 
-		if user.has_key("reviews"):
+		if "reviews" in user:
 			user["reviews"].append(rev)
 		else:
 			user.update({"reviews":[rev]})
 
-		return self.collection.update(
+		self.collection.update(
 			{"_id":user["_id"]},
 			user
 		)
+		
+		return user
 
 
 
@@ -142,15 +144,17 @@ class BookManager(PymongoManager):
 				"stars":review.stars,
 				"_id":review._id,}
 
-		if book.has_key("reviews"):
+		if "reviews" in book:
 			book["reviews"].append(rev)
 		else:
 			book.update({"reviews":[rev]})
 
-		return self.collection.update(
+		self.collection.update(
 			{"_id":book["_id"]},
 			book
 		)
+		
+		return book
 
 class User(NiceDict):
 	def __init__(self, *args, **kwargs):

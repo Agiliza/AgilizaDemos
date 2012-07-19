@@ -113,13 +113,13 @@ class UserLogin(Controller):
 	def get(self, request, params):
 		user = who_is_logged(self.session)
 		if user is not None:
-			return HttpResponseFound(redirect_to=("/user/%s/" % user["username"]))
+			return HttpResponseFound(redirect_to=("/user/%s/" % user))
 		return {}
 
 	def post(self, request, params):
 		user = who_is_logged(self.session)
 		if user is not None:
-			return HttpResponseFound(redirect_to=("/user/%s/" % user["username"]))
+			return HttpResponseFound(redirect_to=("/user/%s/" % user))
 		
 		um = get_user_manager()
 		

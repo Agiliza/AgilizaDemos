@@ -24,6 +24,13 @@ middleware_level1 = ['agiliza.addons.sessions.middlewares.SessionMiddleware']
 templates = {
     'directory': './templates/'
 }
+
+media_url = "/media/"
+media_root = "./media/"
+
+static_url = "/static/"
+static_root = "./static/"
+
 settings = {
 	'sessions':{
 		'directory': './session/',
