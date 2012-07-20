@@ -143,6 +143,8 @@ class BookCreator(Controller):
 				
 				#Si existe, guardamos imagen.
 				if "cover" in request.data:
+					print("DIR COVER: ", dir(request.data["cover"]))
+					print("DIR FILE: ", dir(request.data["cover"].file))
 					file_name_server = book["slug"] + "." + request.data["cover"].filename.split(".")[-1]
 					file = open(media_root + file_name_server, "wb")
 					urlfile = media_url + file_name_server 
@@ -151,6 +153,7 @@ class BookCreator(Controller):
 					
 					file.close()
 					book["urlfile"] = urlfile
+					print("Guardado con éxito! ------- %s ------" % urlfile)
 				
 				
 				id_book = bm.insertBook(book)

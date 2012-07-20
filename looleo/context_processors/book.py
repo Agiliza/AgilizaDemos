@@ -30,31 +30,16 @@ from looleo.managers import get_book_manager, get_user_manager
 from looleo.utils import not_empty
 from looleo.utils import who_is_logged
 
-            
-class Book(Controller):
-
-	def get(self, request, params):
+def ultimos_3_libros(request, params):
 		
 		bm = get_book_manager() 
 		
-		slug = params["book_slug"]
-		book = bm.findOneBook({"slug":slug})
+		cursor = bm.findBooks()
 		
-		user = who_is_logged(self.session)
-		if user is None:
-			user_logged = False
-		else:
-			user_logged = True
-		
-		if book is not None:
-			return {
-				"book" : bm.findOneBook({"slug":slug}),
-				"user_logged" : user_logged,
-				#"count" : self.session["count"],
-				}
-		else:
-			raise HttpResponseNotFound("El libro con identificador %s no existe." % slug)
-			
+		return {
+			"books" : cursor[:3],
+		}
+"""			
 	def post(self, request, params):
 		um = get_user_manager()
 		bm = get_book_manager()
@@ -143,6 +128,8 @@ class BookCreator(Controller):
 				
 				#Si existe, guardamos imagen.
 				if "cover" in request.data:
+					print("DIR COVER: ", dir(request.data["cover"]))
+					print("DIR FILE: ", dir(request.data["cover"].file))
 					file_name_server = book["slug"] + "." + request.data["cover"].filename.split(".")[-1]
 					file = open(media_root + file_name_server, "wb")
 					urlfile = media_url + file_name_server 
@@ -151,6 +138,7 @@ class BookCreator(Controller):
 					
 					file.close()
 					book["urlfile"] = urlfile
+					print("Guardado con éxito! ------- %s ------" % urlfile)
 				
 				
 				id_book = bm.insertBook(book)
@@ -175,4 +163,4 @@ class BookCreator(Controller):
 			return {
 				"msg":"Falta alguno de los campos.",
 			}
-			
+"""

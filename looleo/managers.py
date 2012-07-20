@@ -128,7 +128,7 @@ class BookManager(PymongoManager):
 
 		return self.collection.find_one(query)
 
-	def findBooks(self, document):
+	def findBooks(self, document=None):
 		query = {}
 		if document is not None:
 			query.update(document)

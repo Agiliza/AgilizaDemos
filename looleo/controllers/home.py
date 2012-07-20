@@ -27,29 +27,8 @@ from looleo.managers import User, Book, Review
 from looleo.managers import get_book_manager, get_user_manager
 
 
-class ReviewCreator(Controller):
+class Home(Controller):
 
-	def post(self, request, params):
-		um = get_user_manager()
-		
-		if 'username' in request.data and 'password' in request.data and 'email' in request.data:
-			
-			user = um.createUser({
-				"username":request.data["username"].value,
-				"password":request.data["password"].value,
-				"email":request.data["email"].value,
-			})
-			
-			id_user = um.insertUser(user)
-			
-			if id_user is not None:
-				return {
-					"user":user,
-					"msg":"Created successfully.",
-				}
-
-		return {
-			"user":None,
-			"msg":"Something was wrong.",
-		}
+	def get(self, request, params):
+		return {}
 		
