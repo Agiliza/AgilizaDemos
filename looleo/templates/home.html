@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ book.title }} - {{ book.author }}{% endblock %}
+{% block title %}Looleo{% endblock %}
 
 {% block content %}
 	{% if msg %}
@@ -39,5 +39,14 @@
 		<div class="review">{{ review.stars }} -- {{ review.text }} -- {{ review.user.username }}</div>
 		{% endfor %}
 		</div>
+	{% endif %}
+	
+	{% if books %}
+	Another books:
+		{% for bk in books %}
+		<div class="another_book">
+			{{ bk.title }}
+		</div>
+		{% endfor %}
 	{% endif %}
 {% endblock %}
