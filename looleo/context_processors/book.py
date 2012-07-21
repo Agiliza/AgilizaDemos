@@ -36,9 +36,14 @@ def ultimos_3_libros(request, params):
 		
 		cursor = bm.findBooks()
 		
-		return {
-			"books" : cursor[cursor.count()-3:],
-		}
+		if cursor.count() > 3:
+			return {
+				"books" : cursor[cursor.count()-3:],
+			}
+		else
+			return {
+				"books" : cursor[:cursor.count()],
+			}
 		
 		
 def ultimos_10_libros(request, params):
@@ -47,9 +52,14 @@ def ultimos_10_libros(request, params):
 		
 		cursor = bm.findBooks()
 		
-		return {
-			"books" : cursor[cursor.count()-10:],
-		}
+		if cursor.count() > 10:			
+			return {
+				"books" : cursor[cursor.count()-10:],
+			}
+		else:
+			return {
+				"books" : cursor[:cursor.count()],
+			}
 		
 def ultimos_12_libros(request, params):
 		
@@ -57,9 +67,14 @@ def ultimos_12_libros(request, params):
 		
 		cursor = bm.findBooks()
 		
-		return {
-			"books" : cursor[cursor.count()-12:],
-		}
+		if cursor.count() > 12:
+			return {
+				"books" : cursor[cursor.count()-12:],
+			}
+		else:
+			return {
+				"books" : cursor[:cursor.count()],
+			}
 
 """			
 	def post(self, request, params):

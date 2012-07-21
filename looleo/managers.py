@@ -202,13 +202,13 @@ class Review(NiceDict):
 
 def get_book_manager():
 	return BookManager(
-		database_name="looleo_prueba",
+		database_name="looleo_final",
 		collection_name="looleo_data",
 		)
 		
 def get_user_manager():
 	return UserManager(
-		database_name="looleo_prueba",
+		database_name="looleo_final",
 		collection_name="looleo_data",
 		)
 		
