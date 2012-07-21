@@ -18,6 +18,8 @@ along with Agiliza.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (c) 2012 Álvaro Hurtado <alvarohurtado84@gmail.com>
 """
 
+from json import dumps
+
 from agiliza.controllers import Controller
 from agiliza.http import HttpResponseNotFound
 from agiliza.utils import slugify
@@ -40,7 +42,7 @@ def ultimos_3_libros(request, params):
 			return {
 				"books" : cursor[cursor.count()-3:],
 			}
-		else
+		else:
 			return {
 				"books" : cursor[:cursor.count()],
 			}
@@ -75,6 +77,12 @@ def ultimos_12_libros(request, params):
 			return {
 				"books" : cursor[:cursor.count()],
 			}
+
+def import_dumps(request, params):
+	return {
+		"dumps" : dumps,
+		"str" : str,
+		}
 
 """			
 	def post(self, request, params):

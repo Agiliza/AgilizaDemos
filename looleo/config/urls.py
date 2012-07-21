@@ -6,7 +6,7 @@ url_patterns = (
     #url("app/", include("app.config.url")),
     url("/book/(?P<book_slug>[-\w_]+)/", "looleo.controllers.Book",
         name="book_reviews",
-        context_processors=["looleo.context_processors.book.ultimos_3_libros"],),
+        context_processors=["looleo.context_processors.book.import_dumps"],),
     url("/book/", "looleo.controllers.BookCreator", name="book"),
     
     url("/user/login/", "looleo.controllers.UserLogin", name="user_login"),

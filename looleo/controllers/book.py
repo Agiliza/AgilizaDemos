@@ -30,6 +30,7 @@ from looleo.managers import get_book_manager, get_user_manager
 
 from looleo.utils import not_empty
 from looleo.utils import who_is_logged
+from looleo.utils import filter_dict
 
             
 class Book(Controller):
@@ -48,8 +49,9 @@ class Book(Controller):
 			user_logged = True
 		
 		if book is not None:
+			
 			return {
-				"book" : bm.findOneBook({"slug":slug}),
+				"book" : book,
 				"user_logged" : user_logged,
 				#"count" : self.session["count"],
 				}
