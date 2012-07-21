@@ -78,10 +78,25 @@ def ultimos_12_libros(request, params):
 				"books" : cursor[:cursor.count()],
 			}
 
+
+from bson.objectid import ObjectId
+
+def decursoriza(cursor):
+	if isinstance(cursor, ObjectId):
+		return str(cursor)
+	else:
+		data = []
+		for one in cursor:
+			data.append(one)
+			
+		return data
+
+
 def import_dumps(request, params):
 	return {
 		"dumps" : dumps,
 		"str" : str,
+		"decursoriza": decursoriza,
 		}
 
 """			

@@ -16,6 +16,10 @@ url_patterns = (
     
     url("/", "looleo.controllers.Home",
         name="home",
-        context_processors=["looleo.context_processors.book.ultimos_12_libros"],),
+        context_processors=[
+        "looleo.context_processors.book.ultimos_12_libros",
+        "looleo.context_processors.book.import_dumps",
+        ],
+    ),
 )
 
