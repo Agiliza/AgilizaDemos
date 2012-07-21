@@ -116,6 +116,10 @@ def get_images(data):
         url = book['urlfile']
         name = url.replace('/media/', 'images/')
         book['file'] = name
+        
+        if not os.path.exists('images/'):
+            os.mkdir('images/')
+            
         if os.path.isfile(name):
             continue
 
