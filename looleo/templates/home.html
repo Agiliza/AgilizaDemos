@@ -3,50 +3,38 @@
 {% block title %}Looleo{% endblock %}
 
 {% block content %}
-	{% if msg %}
-	<div class="msg">{{ msg }}</div>
-	{% endif %}
-	
-	{% if book %}
-		<h1>{{ count }}</h1>
-		<h2>{{ book.title }}</h2>
-		<h3>{{ book.author }}</h3>
-		{% if book.urlfile %}
-			<img class="cover" src="{{ book.urlfile }}" />
-		{% endif %}
-		{% if user_logged %}
-		<div class="new_reviews">
-		<form action="." method="post">
-			Texto:
-			<div class="form_field">
-				<textarea name="text" cols="50"></textarea>
-			</div>
-			Puntuación:
-			<div class="form_field">
-				1: <input type="radio" value="1" name="stars"/>
-				2: <input type="radio" value="2" name="stars"/>
-				3: <input type="radio" value="3" name="stars"/>
-				4: <input type="radio" value="4" name="stars"/>
-				5: <input type="radio" value="5" name="stars"/>
-			</div>
-			<input type="submit" value="Enviar" />
-		</form>
-		</div>
-		{% endif %}
-		
-		<div class="reviews">
-		{% for review in book.reviews %}
-		<div class="review">{{ review.stars }} -- {{ review.text }} -- {{ review.user.username }}</div>
-		{% endfor %}
-		</div>
-	{% endif %}
 	
 	{% if books %}
-	Another books:
+	<div class="row">
+	<div class="span12">
+	<h2 class="page_title">Libros más recientes:</h2>
 		{% for bk in books %}
-		<div class="another_book">
-			{{ bk.title }}
-		</div>
+			{% if loop.index in [1,5,9] %}
+			<div class="row">
+			{% endif %}
+			
+			<div class="span3 another_book">
+				
+				<div class="span3 book_title"><a href="/book/{{ bk.slug }}/">{{ bk.title }}</a></div>
+				<div class="span3 book_author"><a href="/book/{{ bk.slug }}/">{{ bk.author }}</a></div>
+
+				<div class="span3">
+					{% if bk.urlfile %}
+						<img class="lilcover" src="{{ bk.urlfile }}" />
+					{% endif %}
+				</div>
+			</div>
+			
+			{% if loop.index in [4, 8, 12] %}
+			</div>
+			{% else %}
+				{% if loop.last %}
+					</div>
+				{% endif %}
+			{% endif %}
 		{% endfor %}
+	</div>
+	</div>
 	{% endif %}
+	
 {% endblock %}

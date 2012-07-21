@@ -37,8 +37,30 @@ def ultimos_3_libros(request, params):
 		cursor = bm.findBooks()
 		
 		return {
-			"books" : cursor[:3],
+			"books" : cursor[cursor.count()-3:],
 		}
+		
+		
+def ultimos_10_libros(request, params):
+		
+		bm = get_book_manager() 
+		
+		cursor = bm.findBooks()
+		
+		return {
+			"books" : cursor[cursor.count()-10:],
+		}
+		
+def ultimos_12_libros(request, params):
+		
+		bm = get_book_manager() 
+		
+		cursor = bm.findBooks()
+		
+		return {
+			"books" : cursor[cursor.count()-12:],
+		}
+
 """			
 	def post(self, request, params):
 		um = get_user_manager()

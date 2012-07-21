@@ -1,9 +1,64 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head>
         <title>{% block title %}{% endblock %}</title>
+        
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="/static/css/style.css" rel="stylesheet">
     </head>
 
     <body>
-        {% block content %}{% endblock %}
+    <div class="container">
+        
+        <div class="row">
+            <div class="span12">
+            <div class="looleo">
+            <h1>LooLEO</h1>
+            </div>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="span12 menu">
+                <div class="span2">
+                    <a href="/">Home</a>
+                </div>
+                <div class="span2">
+                    <a href="/book/">Nuevo libro</a>
+                </div>
+                <div class="span2">
+                    <a href="/user/">Registrate</a>
+                </div>
+                <div class="span2">
+                    <a href="/user/login/">Login</a>
+                </div>
+                <div class="span2">
+                    <a href="/user/logout/">Logout</a>
+                </div>
+            {% block menu %}{% endblock %}
+            </div>
+        </div>
+        
+        <div class="row">
+        <div class="span12">
+            {% if msg %}
+            <div class="row"><div class="span10 offset1">
+            <div class="msg center">{{ msg }}</div>
+            </div></div>
+            {% endif %}
+            
+            {% block content %}{% endblock %}
+        </div>
+        </div>
+        
+        <div class="row">
+            <div class="footer center span12">
+            Desarrollado por Álvaro Hurtado Mochón y Vicente Ruiz Rodríguez
+            </div>
+        </div>
+        
+    </div>    
     </body>
 </html>

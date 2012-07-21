@@ -3,29 +3,41 @@
 {% block title %}Gestión de Libros{% endblock %}
 
 {% block content %}
-	{% if msg %}
-	<div class="msg">{{ msg }}</div>
-	{% endif %}
-	
+
 	{% if book %}
-		<h2>{{ book.title }}</h2>
-		<h3>{{ book.author }}</h3>
-		{% if book.urlfile %}
-			<img class="cover" src="{{ book.urlfile }}" />
-		{% endif %}
+	<div class="row">
+		<div class="span12">
+			<h1 class="page_title">{{ book.title }}</h1>
+			<h3 class="page_subtitle">{{ book.author }}</h2>		
+		</div>
+		<div class="row">
+			<div class="span5 offset1">
+				{% if book.urlfile %}
+					<img class="cover" src="{{ book.urlfile }}" />
+				{% endif %}
+			</div>
+		</div>
+	</div>
 	{% else %}
-		<h3>Cree un nuevo libro:</h3>
+	<div class="row">
+		<div class="span12">
+		<h3 class="page_title">Cree un nuevo libro:</h3>
 		<form action="." method="post" enctype="multipart/form-data">
+			Título:
 			<div class="form_field">
-				Título:<input type="text" name="title"/>
+				<input type="text" name="title"/>
 			</div>
+			Autor:
 			<div class="form_field">
-				Autor:<input type="text" name="author"/>
+				<input type="text" name="author"/>
 			</div>
+			Imagen:
 			<div class="form_field">
-				Imagen:<input type="file" name="cover"/>
+				<input type="file" name="cover"/>
 			</div>
-			<input type="submit" value="Enviar" />
+			<input class="btn btn-primary" type="submit" value="Enviar" />
 		</form>
+		</div>
+	</div>
 	{% endif %}
 {% endblock %}

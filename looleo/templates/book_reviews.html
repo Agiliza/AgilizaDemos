@@ -3,41 +3,71 @@
 {% block title %}{{ book.title }} - {{ book.author }}{% endblock %}
 
 {% block content %}
-	{% if msg %}
-	<div class="msg">{{ msg }}</div>
-	{% endif %}
-	
+
 	{% if book %}
-		<h1>{{ count }}</h1>
-		<h2>{{ book.title }}</h2>
-		<h3>{{ book.author }}</h3>
-		{% if book.urlfile %}
-			<img class="cover" src="{{ book.urlfile }}" />
-		{% endif %}
-		{% if user_logged %}
-		<div class="new_reviews">
-		<form action="." method="post">
-			Texto:
-			<div class="form_field">
-				<textarea name="text" cols="50"></textarea>
+	<div class="row">
+	<div class="span12">
+		<div class="row"><div class="span12">
+			<h1 class="page_title">{{ book.title }}</h1>
+			<h3 class="page_subtitle">{{ book.author }}</h2>
+		</div></div>
+		<div class="row">
+			<div class="span8">
+			{% for review in book.reviews %}
+			<div class="row">
+				<div class="span8 review">
+					<div class="row">
+						<div class="span6">
+						<p class="text">{{ review.text }}</p>
+						</div>
+						<div class="span2">
+							<div class="row"><div class="span2 center">
+								<span class="stars">{{ review.stars }}</span>
+							</div></div>
+							<div class="row"><div class="span2 center">
+								<a class="user_link" href="/user/{{ review.user.username }}/">{{ review.user.username }}</a>
+							</div></div>
+						</div>
+					</div>
+				</div>
 			</div>
-			Puntuación:
-			<div class="form_field">
-				1: <input type="radio" value="1" name="stars"/>
-				2: <input type="radio" value="2" name="stars"/>
-				3: <input type="radio" value="3" name="stars"/>
-				4: <input type="radio" value="4" name="stars"/>
-				5: <input type="radio" value="5" name="stars"/>
+			{% endfor %}
 			</div>
-			<input type="submit" value="Enviar" />
-		</form>
-		</div>
-		{% endif %}
 		
-		<div class="reviews">
-		{% for review in book.reviews %}
-		<div class="review">{{ review.stars }} -- {{ review.text }} -- {{ review.user.username }}</div>
-		{% endfor %}
+				
+			{% if user_logged %}
+			<div class="new_reviews span4">
+				<div class="row"><div class="span4">
+				{% if book.urlfile %}
+					<img class="bigcover" src="{{ book.urlfile }}" />
+				{% endif %}
+				</div></div>
+				
+				<div class="row"><div class="span4">
+					<span class="title_review">Nueva reseña:</span>
+					<form action="." method="post">
+						Texto:
+						<div class="form_field">
+							<textarea name="text" cols="50"></textarea>
+						</div>
+						Puntuación:
+						<div class="form_field">
+							1: <input type="radio" value="1" name="stars"/>
+							2: <input type="radio" value="2" name="stars"/>
+							3: <input type="radio" value="3" name="stars"/>
+							4: <input type="radio" value="4" name="stars"/>
+							5: <input type="radio" value="5" name="stars"/>
+						</div>
+						<div class="form_field">
+							<input class="btn btn-primary" type="submit" value="Enviar" />
+						</div>
+					</form>
+				</div></div>
+			</div>
+			{% endif %}
+			
 		</div>
+	</div>
+	</div>
 	{% endif %}
 {% endblock %}

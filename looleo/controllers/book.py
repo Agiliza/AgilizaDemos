@@ -20,6 +20,7 @@ Copyright (c) 2012 Álvaro Hurtado <alvarohurtado84@gmail.com>
 
 from agiliza.controllers import Controller
 from agiliza.http import HttpResponseNotFound
+from agiliza.http import HttpResponseFound
 from agiliza.utils import slugify
 from agiliza.core.config import ConfigRunner
 

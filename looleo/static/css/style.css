@@ -1,0 +1,120 @@
+
+body{
+}
+
+.looleo{
+	font-size: 4em;
+	color: #554080;
+	margin-top: 20px;
+}
+
+.page_title{
+	background: #807340;
+	color: #E6E1CF;
+	border-radius: 5px;
+	padding-left: 20px;
+	margin-top: 5px;
+}
+
+.page_subtitle{
+	color: #807340;
+	/*background: #E6E1CF;*/
+	border-radius: 5px;
+	padding-left: 20px;
+
+}
+
+.book_title, .book_title a{
+	color: #807340;
+}
+
+.book_author, .book_author a{
+	color: #5C458A;
+	font-size: 0.8em;
+}
+
+.menu, .footer{
+	color: #E6E1CF;
+	background: #554080;
+	border-radius: 5px;
+}
+
+.menu a, .footer a{
+	color: #E6E1CF;
+}
+
+.bigcover{
+	/*width: 300px;*/
+	/*height: 400px;*/
+}
+
+.lilcover{
+	width: 180px;
+}
+
+.stars{
+	font-size: 1.8em;
+	color: #554080;
+}
+
+.user_link{
+	font-size: 1.2em;
+}
+
+.center{
+	text-align: center;
+}
+
+.review{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 5px;
+	
+	font-size: 1.2em;
+	border-radius: 10px;
+	background: #E6E1CF;
+}
+
+.text{
+	margin-left: 10px;
+}
+
+.another_book{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	
+	margin-top: 5px;
+	
+	font-size: 1.2em;
+	border-radius: 10px;
+	background: #E6E1CF;
+}
+
+.review a{
+	color: #554080;
+}
+
+.title_review{
+	font-size: 1.4em;
+}
+
+.new_reviews{
+	margin-top: 10px;
+}
+
+.form_field{
+	margin-top: 5px;
+}
+
+.footer{
+	margin-top: 10px;
+}
+
+.msg{
+	border-radius:5px;
+	font-size: 1.5em;
+	color: white;
+	background: #6030BF;
+	padding: 5px;
+	margin-top: 5px;
+}

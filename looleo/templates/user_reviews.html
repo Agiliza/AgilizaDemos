@@ -3,17 +3,35 @@
 {% block title %}Perfil de {{ user.username }}{% endblock %}
 
 {% block content %}
-	{% if msg %}
-	<div class="msg">{{ msg }}</div>
-	{% endif %}
-	
 	{% if user %}
-		<h2>{{ user.username }}</h2>
-		<div class="reviews">
-			{% for review in user.reviews %}
-			<div class="book">{{ review.book.title }} - {{ review.book.author }}</div>
-			<div class="review">{{ review.stars }} -- {{ review.text }}</div>
+		<div class="row"><div class="span12">
+			<h2 class="page_title">{{ user.username }}</h2>
+			<div class="span8">
+			{% for review in user.reviews %}			
+			<div class="review row">
+				<div class="span2">
+					{% if review.book.urlfile %}
+					<img class="litlecover" src="{{ review.book.urlfile }}" />
+					{% endif %}
+				</div>
+				<div class="span1 center">
+					<span class="stars">{{ review.stars }}</span>
+				</div>	
+				<div class="span5">
+					<div class="row">
+					<div class="span5 book">
+						<a href="/book/{{ review.book.slug }}/">{{ review.book.title }} - {{ review.book.author }}</a>
+					</div>
+					</div>
+					<div class="row">
+					<div class="span5 text">
+						{{ review.text }}
+					</div>
+					</div>
+				</div>
+			</div>
 			{% endfor %}
-		</div>
+			</div>
+		</div></div>
 	{% endif %}
 {% endblock %}

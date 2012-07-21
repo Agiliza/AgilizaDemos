@@ -3,26 +3,34 @@
 {% block title %}Gestión de Usuarios{% endblock %}
 
 {% block content %}
-	{% if msg %}
-	<div class="msg">{{ msg }}</div>
-	{% endif %}
-	
+	<div class="row"><div class="span12">
 	{% if user %}
-		<h2>{{ user.username }}</h2>
-		<h3>{{ user.email }}</h3>		
+	<div class="row"></div>
+		<h2 class="page_title">{{ user.username }}</h2>
+		<h3 class="page_subtitle">{{ user.email }}</h3>
+	</div>
 	{% else %}
-		<h3>Cree un nuevo usuario:</h3>
-		<form action="." method="post">
-			<div class="form_field">
-				Nombre de usuario:<input type="text" name="username"/>
-			</div>
-			<div class="form_field">
-				Email:<input type="text" name="email"/>
-			</div>
-			<div class="form_field">
-				Password:<input type="password" name="password"/>
-			</div>
-			<input type="submit" value="Enviar" />
-		</form>
+	<div class="row">
+		<div class="span12">
+			<h3 class="page_title">Cree un nuevo usuario:</h3>
+			<form action="." method="post">
+				Nombre de usuario:
+				<div class="form_field">
+					<input type="text" name="username"/>
+				</div>
+				Email:
+				<div class="form_field">
+					<input type="text" name="email"/>
+				</div>
+				Password:
+				<div class="form_field">
+					<input type="password" name="password"/>
+				</div>
+				<input class="btn btn-primary" type="submit" value="Enviar" />
+			</form>
+		</div>
+	</div>
 	{% endif %}
+	</div></div>
+	
 {% endblock %}

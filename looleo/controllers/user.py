@@ -134,7 +134,6 @@ class UserLogin(Controller):
 			})
 			
 			if user is not None:
-				print("SID: ", self.session["sid"])
 				self.session["user_logged"] = str(request.data["username"].value)
 				return HttpResponseFound(
 					redirect_to="/user/%s/" % user["username"]
