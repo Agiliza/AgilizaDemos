@@ -1,2 +1,1 @@
-
 {{ dumps(books, default=decursoriza) }}
